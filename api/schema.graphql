@@ -1,0 +1,36 @@
+type Query {
+  employees(type: String): [Employee]
+  employee(id: ID): Employee
+}
+
+type Employee {
+  id: ID!
+  firstname: String
+  lastname: String
+  age: Int
+  doj: String
+  title: String
+  department: String
+  type: String
+  status: Int
+}
+
+type Mutation {
+  addEmployee(
+    firstname: String!
+    lastname: String!
+    age: Int!
+    doj: String!
+    title: String!
+    department: String!
+    type: String!
+    status: Int!
+  ): Employee
+  updateEmployee(
+    id: ID!
+    title: String!
+    department: String!
+    status: Int!
+  ): Employee
+  deleteEmployee(id: ID!): Employee
+}
