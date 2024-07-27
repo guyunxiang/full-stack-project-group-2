@@ -1,14 +1,15 @@
 type Query {
   employees(type: String): [Employee]
   employee(id: ID): Employee
+  upcomingRetirements(type: String): [Employee]
 }
 
 type Employee {
   id: ID!
   firstname: String
   lastname: String
-  age: Int
   doj: String
+  dob: String
   title: String
   department: String
   type: String
@@ -19,8 +20,8 @@ type Mutation {
   addEmployee(
     firstname: String!
     lastname: String!
-    age: Int!
     doj: String!
+    dob: String!
     title: String!
     department: String!
     type: String!
