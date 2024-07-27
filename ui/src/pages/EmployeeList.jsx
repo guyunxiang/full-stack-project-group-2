@@ -22,7 +22,7 @@ const EmployeeListPage = () => {
             id
             firstname
             lastname
-            age
+            dob
             doj
             title
             department
@@ -101,11 +101,15 @@ const EmployeeListPage = () => {
   const renderTd = (id, rowData) => {
     const tds = Object.keys(rowData).map((key) => {
       // format date of joining data
-      if (key === "doj") {
+      if (key === 'doj') {
         const dateString = new Intl.DateTimeFormat("en-CA").format(
           new Date(+rowData[key])
         );
         return <td key={rowData[key]}>{dateString}</td>;
+      }
+      if (key === 'dob') {
+        const age = new Date().getFullYear() - new Date(+rowData[key]).getFullYear();
+        return <td key={rowData[key]}>{age}</td>;
       }
       return <td key={rowData[key]}>{rowData[key]}</td>;
     });
