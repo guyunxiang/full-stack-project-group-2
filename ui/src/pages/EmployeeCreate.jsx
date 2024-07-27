@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
+import { Form, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 import { TITLES, DEPARTMENTS, EMPLOYEETYPES } from "../utils/const";
-import { toast } from "react-toastify";
 
 const EmployeeCreatePage = () => {
   const formRef = useRef(null);
@@ -108,19 +109,6 @@ const EmployeeCreatePage = () => {
     addEmployee(data);
   };
 
-  // render error message
-  const renderErrorMessage = () => {
-    if (!errors.length) return null;
-    return (
-      <div className="alert alert-danger">
-        {errors.map((error) => (
-          <p className="m-0" key={error}>
-            {error}
-          </p>
-        ))}
-      </div>
-    );
-  };
 
   // default date of joining
   const defaultDateOfJoining = new Intl.DateTimeFormat("en-CA").format(
@@ -131,117 +119,113 @@ const EmployeeCreatePage = () => {
     <div className="container">
       <h2 className="mb-3">Add an employee</h2>
       <hr />
-      {renderErrorMessage()}
-      <form
-        className="row row-gap-3 form"
-        ref={formRef}
-        onSubmit={handleSubmit}
-      >
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="firstname" className="w-25 form-label">
+      {
+        errors.length > 0 && (
+          <div className="alert alert-danger">
+            {errors.map((error) => (
+              <p className="m-0" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
+        )
+      }
+      <Form className="row row-gap-3 form" ref={formRef} onSubmit={handleSubmit}>
+        <Form.Group className="col-12 col-xl-6 row align-items-center" controlId="firstName">
+          <Form.Label className="w-25 form-label">
             First Name:
-          </label>
-          <input type="text" name="firstname" className="w-75 form-control" />
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="lastname" className="w-25 form-label">
+          </Form.Label>
+          <Form.Control type="text" name="firstname" className="w-75 form-control" />
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center" controlId="lastName">
+          <Form.Label className="w-25 form-label">
             Last Name:
-          </label>
-          <input type="text" name="lastname" className="w-75 form-control" />
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="age" className="w-25">
+          </Form.Label>
+          <Form.Control type="text" name="lastname" className="w-75 form-control" />
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center" controlId="age">
+          <Form.Label className="w-25">
             Age:
-          </label>
-          <input type="number" name="age" className="w-75 form-control" />
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="doj" className="w-25 form-label">
+          </Form.Label>
+          <Form.Control type="number" name="age" className="w-75 form-control" />
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center" controlId="doj">
+          <Form.Label className="w-25 form-label">
             Date of Joining:
-          </label>
-          <input
+          </Form.Label>
+          <Form.Control
             type="date"
             name="doj"
             className="w-75 form-control"
             defaultValue={defaultDateOfJoining}
           />
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="title" className="w-25 form-label">
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center" controlId="title">
+          <Form.Label className="w-25 form-label">
             Title:
-          </label>
+          </Form.Label>
           <div className="d-flex w-75 gap-3 ps-0">
             {TITLES.map((title, index) => (
-              <label htmlFor={title} key={title} className="form-check-label">
-                <input
-                  type="radio"
-                  name="title"
-                  id={title}
-                  value={title}
-                  defaultChecked={!index}
-                  className="me-1 form-check-input"
-                />
-                {title}
-              </label>
+              <Form.Check
+                key={title}
+                type="radio"
+                name="title"
+                id={title}
+                value={title}
+                defaultChecked={!index}
+                label={title}
+              />
             ))}
           </div>
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="department" className="w-25 form-label">
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center" controlId="department">
+          <Form.Label className="w-25 form-label">
             Department:
-          </label>
-          <select
-            name="department"
-            id="department"
-            className="w-75 form-select"
-          >
+          </Form.Label>
+          <Form.Select name="department" className="w-75 form-select">
             {DEPARTMENTS.map((department) => (
               <option key={department} value={department}>
                 {department}
               </option>
             ))}
-          </select>
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="type" className="w-25 form-label">
+          </Form.Select>
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center" controlId="type">
+          <Form.Label className="w-25 form-label">
             Employee Type:
-          </label>
+          </Form.Label>
           <div className="d-flex w-75 gap-3 ps-0">
             {EMPLOYEETYPES.map((type, index) => (
-              <label htmlFor={type} key={type}>
-                <input
-                  type="radio"
-                  name="type"
-                  id={type}
-                  value={type}
-                  defaultChecked={!index}
-                  className="me-1 form-check-input"
-                />
-                {type}
-              </label>
+              <Form.Check
+                key={type}
+                type="radio"
+                name="type"
+                id={type}
+                value={type}
+                defaultChecked={!index}
+                label={type}
+              />
             ))}
           </div>
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="status" className="w-25 form-label">
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center" controlId="status">
+          <Form.Label className="w-25 form-label">
             Current Status:
-          </label>
-          <input
+          </Form.Label>
+          <Form.Control
             type="number"
             name="status"
             className="w-75 form-control"
             defaultValue={1}
             disabled
           />
-        </div>
+        </Form.Group>
         <div className="col-12 col-xl-6 row align-items-center">
-          <input
-            type="submit"
-            value="Add an Employee"
-            className="btn btn-primary"
-          />
+          <Button type="submit" className="btn btn-primary">
+            Add an Employee
+          </Button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };
