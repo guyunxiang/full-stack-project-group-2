@@ -1,4 +1,5 @@
 import React from "react";
+import { Form } from "react-bootstrap";
 
 import { EMPLOYEETYPES } from '../utils/const';
 
@@ -12,25 +13,24 @@ const EmployeeFilter = ({
 
   return (
     <div className="d-flex align-items-center">
-      <label htmlFor="type" className="form-label me-3 mb-0">
+      <Form.Label htmlFor="type" className="form-label me-3 mb-0">
         Employee Type:
-      </label>
-      <div className="d-flex gap-3 ps-0 me-3">
+      </Form.Label>
+      <Form.Group className="d-flex gap-3 ps-0 me-3">
         {employeeList.map((type, index) => (
-          <label htmlFor={type} key={type}>
-            <input
+          <div className="d-flex align-items-center w-75 gap-1 ps-0">
+            <Form.Check
               type="radio"
               name="type"
               id={type}
               value={type}
               defaultChecked={!index}
+              label={type}
               onChange={(e) => handleChange(e.target.value)}
-              className="me-1 form-check-input"
             />
-            {type}
-          </label>
+          </div>
         ))}
-      </div>
+      </Form.Group>
     </div>
   )
 }
