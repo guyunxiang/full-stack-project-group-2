@@ -18,7 +18,7 @@ const EmployeeFilter = ({
       </Form.Label>
       <Form.Group className="d-flex gap-3 ps-0 me-3">
         {employeeList.map((type, index) => (
-          <div className="d-flex align-items-center w-75 gap-1 ps-0">
+          <div key={index} className="d-flex align-items-center w-75 gap-1 ps-0">
             <Form.Check
               type="radio"
               name="type"
