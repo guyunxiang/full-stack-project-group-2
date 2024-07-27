@@ -76,10 +76,8 @@ const EmployeeDetailPage = () => {
             department: $department
             status: $status
           ) {
-            id
-            title
-            department
-            status
+            success
+            message
           }
         }
       `,
@@ -95,8 +93,12 @@ const EmployeeDetailPage = () => {
     if (!res.ok) {
       throw new Error("Failed to update employee data");
     }
+    const { data: { updateEmployee } } = await res.json();
+    if (!updateEmployee.success) {
+      toast.error(updateEmployee.message);
+      return;
+    }
     toast.success("Update successfully!");
-    await res.json();
   };
 
   // on create a new employee

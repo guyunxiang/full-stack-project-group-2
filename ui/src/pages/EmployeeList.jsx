@@ -69,13 +69,10 @@ const EmployeeListPage = () => {
   const handleDeleteEmployee = async (id) => {
     const requestBody = {
       query: `
-        mutation deleteEmployee(
-          $id: ID!
-        ) {
-          deleteEmployee(
-            id: $id
-          ) {
-            id
+        mutation deleteEmployee($id: ID!) {
+          deleteEmployee(id: $id) {
+            success
+            message
           }
         }
       `,
@@ -91,7 +88,11 @@ const EmployeeListPage = () => {
     if (!res.ok) {
       throw new Error("Failed to delete employee");
     }
-    await res.json();
+    const { data: { deleteEmployee } } = await res.json();
+    if (!deleteEmployee.success) {
+      toast.error(deleteEmployee.message);
+      return;
+    }
     toast.success("Delete successfully!");
     fetchEmployeeList(employeeType);
   };

@@ -56,15 +56,8 @@ const EmployeeCreatePage = () => {
             type: $type
             status: $status
           ) {
-            id
-            firstname
-            lastname
-            age
-            doj
-            title
-            department
-            type
-            status
+            success
+            message
           }
         }
       `,
@@ -80,7 +73,11 @@ const EmployeeCreatePage = () => {
     if (!res.ok) {
       throw new Error("Failed to fetch employee list");
     }
-    await res.json();
+    const { data: { addEmployee } } = await res.json();
+    if (!addEmployee.success) {
+      toast.error(addEmployee.message);
+      return;
+    }
     toast.success("Create employee successfully!");
     formRef.current.reset();
   };
