@@ -20,7 +20,7 @@ const EmployeeCreatePage = () => {
       newErrors.push("Last Name is required");
     }
 
-    const age = parseInt(formData.age);
+    const age = new Date().getFullYear() - new Date(formData.dob).getFullYear();
     if (isNaN(age) || age < 20 || age > 70) {
       newErrors.push("Age must be between 20 and 70");
     }
@@ -39,8 +39,8 @@ const EmployeeCreatePage = () => {
         mutation addEmployee(
           $firstname: String!
           $lastname: String!
-          $age: Int!
           $doj: String!
+          $dob: String!
           $title: String!
           $department: String!
           $type: String!
@@ -49,8 +49,8 @@ const EmployeeCreatePage = () => {
           addEmployee(
             firstname: $firstname
             lastname: $lastname
-            age: $age
             doj: $doj
+            dob: $dob
             title: $title
             department: $department
             type: $type
@@ -142,9 +142,14 @@ const EmployeeCreatePage = () => {
         </Form.Group>
         <Form.Group className="col-12 col-xl-6 row align-items-center" controlId="age">
           <Form.Label className="w-25">
-            Age:
+            Date of Birth:
           </Form.Label>
-          <Form.Control type="number" name="age" className="w-75 form-control" />
+          <Form.Control
+            type="date"
+            name="dob"
+            className="w-75 form-control"
+            defaultValue={defaultDateOfJoining}
+          />
         </Form.Group>
         <Form.Group className="col-12 col-xl-6 row align-items-center" controlId="doj">
           <Form.Label className="w-25 form-label">

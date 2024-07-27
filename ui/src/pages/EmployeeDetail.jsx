@@ -23,7 +23,7 @@ const EmployeeDetailPage = () => {
             id
             firstname
             lastname
-            age
+            dob
             doj
             title
             department
@@ -50,6 +50,9 @@ const EmployeeDetailPage = () => {
       const employeeData = data.data.employee;
       employeeData.doj = new Intl.DateTimeFormat("en-CA").format(
         new Date(+employeeData.doj)
+      );
+      employeeData.dob = new Intl.DateTimeFormat("en-CA").format(
+        new Date(+employeeData.dob)
       );
       // update employee data
       setEmployeeData(employeeData);
@@ -150,13 +153,13 @@ const EmployeeDetailPage = () => {
         </div>
         <div className="col-12 col-xl-6 row align-items-center">
           <label htmlFor="age" className="w-25">
-            Age:
+            Date of Birth:
           </label>
           <input
-            type="number"
+            type="date"
             name="age"
             className="w-75 form-control"
-            defaultValue={employeeData.age}
+            defaultValue={employeeData.dob}
             disabled
           />
         </div>
