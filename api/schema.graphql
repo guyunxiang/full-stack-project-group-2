@@ -25,12 +25,17 @@ type Mutation {
     department: String!
     type: String!
     status: Int!
-  ): Employee
+  ): Response
   updateEmployee(
     id: ID!
     title: String!
     department: String!
     status: Int!
-  ): Employee
-  deleteEmployee(id: ID!): Employee
+  ): Response
+  deleteEmployee(id: ID!): Response
+}
+
+type Response {
+  success: Boolean!
+  message: String
 }

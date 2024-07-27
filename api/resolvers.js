@@ -32,9 +32,14 @@ const resolvers = {
     // insert employee into database via graphql
     addEmployee: async (_, data) => {
       try {
+        // create new employee
         const employee = new Employee(data);
+        // save employee data
         await employee.save();
-        return employee;
+        return {
+          success: true,
+          message: "Employee added successfully",
+        };
       } catch (error) {
         throw new Error("Error adding employee");
       }
@@ -42,9 +47,29 @@ const resolvers = {
     // update employee data
     updateEmployee: async (_, data) => {
       try {
-        return await Employee.findByIdAndUpdate(data.id, data, {
+        const { id, status } = data;
+        // if employee id not found
+        if (!id) {
+          return {
+            success: false,
+            message: "Employee id not found",
+          };
+        }
+        //
+        if (status < 1 || status > 5) {
+          return {
+            success: false,
+            message: "Invalid status value",
+          };
+        }
+        // find employee by id and update
+        await Employee.findByIdAndUpdate(data.id, data, {
           new: true,
         });
+        return {
+          success: true,
+          message: "Employee updated successfully",
+        };
       } catch (error) {
         throw new Error("Error updating employee");
       }
@@ -53,7 +78,27 @@ const resolvers = {
     deleteEmployee: async (_, data) => {
       try {
         const { id } = data;
-        return await Employee.findByIdAndDelete(id);
+        const employee = await Employee.findById(id);
+        // if employee not found
+        if (!employee) {
+          return {
+            success: false,
+            message: "Employee not found",
+          };
+        }
+        // if employee status is active
+        if (employee.status === 1) {
+          return {
+            success: false,
+            message: "can't delete employee - status active"
+          };
+        }
+        // delete employee
+        await Employee.findByIdAndDelete(id);
+        return {
+          success: true,
+          message: "Employee deleted successfully",
+        };
       } catch (error) {
         throw new Error("Error deleting employee");
       }
