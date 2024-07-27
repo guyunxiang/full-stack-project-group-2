@@ -27,6 +27,18 @@ const resolvers = {
         console.log("Error fetching employee", error);
       }
     },
+    // query upcoming retirement employee
+    upcomingRetirements: async () => {
+      try {
+        const currentDate = new Date();
+        const retirementDate = new Date(currentDate.setFullYear(currentDate.getFullYear() + 60));
+        return await Employee.find({
+          doj: { $lt: retirementDate },
+        });
+      } catch (error) {
+        console.log("Error fetching upcoming retirement employee", error);
+      }
+    }
   },
   Mutation: {
     // insert employee into database via graphql
@@ -90,7 +102,7 @@ const resolvers = {
         if (employee.status === 1) {
           return {
             success: false,
-            message: "can't delete employee - status active"
+            message: "Can't delete employee - current status active"
           };
         }
         // delete employee
