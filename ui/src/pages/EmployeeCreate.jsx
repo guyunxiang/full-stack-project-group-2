@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-import { TITLES, DEPARTMENTS, EMPLOYEETYPES } from "../utils/const";
+import { TITLES, DEPARTMENTS, EMPLOYEETYPES, STATUS } from "../utils/const";
 
 const EmployeeCreatePage = () => {
   const formRef = useRef(null);
@@ -215,10 +215,10 @@ const EmployeeCreatePage = () => {
             Current Status:
           </Form.Label>
           <Form.Control
-            type="number"
+            type="text"
             name="status"
             className="w-75 form-control"
-            defaultValue={1}
+            defaultValue={Object.values(STATUS)[0]}
             disabled
           />
         </Form.Group>
