@@ -13,6 +13,7 @@ type Employee {
   title: String
   department: String
   retirementDate: String
+  timeToRetirement: String
   type: String
   status: Int
 }
