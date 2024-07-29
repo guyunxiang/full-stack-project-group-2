@@ -28,13 +28,56 @@ const resolvers = {
       }
     },
     // query upcoming retirement employee
-    upcomingRetirements: async () => {
+    upcomingRetirements: async (_, { type }) => {
       try {
+        // all the employee whose retirement is coming in next six month.
         const currentDate = new Date();
-        const retirementDate = new Date(currentDate.setFullYear(currentDate.getFullYear() + 60));
-        return await Employee.find({
-          doj: { $lt: retirementDate },
-        });
+        const sixMonthsLater = new Date(currentDate.getTime() + 6 * 30 * 24 * 60 * 60 * 1000);
+        const retirementAge = 65;
+
+        const matchs = [
+          {
+            $match: {
+              retirementDate: {
+                $gte: currentDate,
+                $lte: sixMonthsLater
+              }
+            }
+          }
+        ];
+        if (type) {
+          matchs.unshift({
+            $match: {
+              type: { $regex: type, $options: "i" }
+            }
+          });
+        }
+        return await Employee.aggregate([
+          {
+            $addFields: {
+              retirementDate: {
+                $add: [
+                  "$dob",
+                  { $multiply: [retirementAge, 365.25 * 24 * 60 * 60 * 1000] }
+                ]
+              }
+            }
+          },
+          ...matchs,
+          {
+            $project: {
+              firstname: 1,
+              lastname: 1,
+              dob: 1,
+              doj: 1,
+              retirementDate: 1,
+              title: 1,
+              department: 1,
+              type: 1,
+              status: 1
+            }
+          }
+        ]);
       } catch (error) {
         console.log("Error fetching upcoming retirement employee", error);
       }
