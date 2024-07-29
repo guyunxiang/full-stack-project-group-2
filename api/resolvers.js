@@ -22,7 +22,36 @@ const resolvers = {
     // query employee by id
     employee: async (_, { id }) => {
       try {
-        return await Employee.findById(id);
+        const employee = await Employee.findById(id);
+        const { dob } = employee;
+
+        const retirementDate = new Date(dob);
+        retirementDate.setFullYear(retirementDate.getFullYear() + 65);
+
+        const currentDate = new Date();
+
+        if (currentDate >= retirementDate) {
+          employee.timeToRetirement = { years: 0, months: 0, days: 0 };
+          return employee;
+        }
+
+        let years = retirementDate.getFullYear() - currentDate.getFullYear();
+
+        let months = retirementDate.getMonth() - currentDate.getMonth();
+        let days = retirementDate.getDate() - currentDate.getDate();
+
+        if (days < 0) {
+          months--;
+          days += new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+        }
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+
+        employee.timeToRetirement = JSON.stringify({ years, months, days });
+
+        return employee;
       } catch (error) {
         console.log("Error fetching employee", error);
       }
