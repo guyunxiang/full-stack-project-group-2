@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import { Table } from "react-bootstrap";
 import { toast } from "react-toastify";
 
+
 import EmployeeFilter from "../components/EmployeeFilter";
+import { STATUS } from "../utils/const";
 
 const EmployeeListPage = () => {
   const navigate = useNavigate();
@@ -111,6 +113,9 @@ const EmployeeListPage = () => {
         const age = new Date().getFullYear() - new Date(+rowData[key]).getFullYear();
         return <td key={rowData[key]}>{age}</td>;
       }
+      if (key === 'status') {
+        return <td key={rowData[key]}>{STATUS[rowData[key]]}</td>
+      }
       return <td key={rowData[key]}>{rowData[key]}</td>;
     });
     tds.push(
@@ -157,7 +162,7 @@ const EmployeeListPage = () => {
       <hr />
       <EmployeeFilter handleChange={handleChange} />
       <hr />
-      <table className="table">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>First Name</th>
@@ -172,7 +177,7 @@ const EmployeeListPage = () => {
           </tr>
         </thead>
         <tbody>{renderTable(employeeData)}</tbody>
-      </table>
+      </Table>
     </div>
   );
 };
