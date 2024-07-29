@@ -24,11 +24,11 @@ const Header = () => {
               <Nav.Link href="/" onClick={handleNavigate}>
                 Home
               </Nav.Link>
-              <Nav.Link href="/retirement" onClick={handleNavigate}>
+              <Nav.Link href="/retirements" onClick={handleNavigate}>
                 UpComing Retirement
               </Nav.Link>
               <Nav.Link href="/add" onClick={handleNavigate}>
-                Add Employee
+                New Employee
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

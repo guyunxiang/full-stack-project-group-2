@@ -20,7 +20,7 @@ function App() {
           <Route path="/" element={<EmployeeListPage />} />
           <Route path="/add" element={<EmployeeCreatePage />} />
           <Route path="/employee/:id" element={<EmployeeDetailPage />} />
-          <Route path="/retirement" element={<UpComingRetirement />} />
+          <Route path="/retirements" element={<UpComingRetirement />} />
         </Routes>
       </main>
       <Footer />
