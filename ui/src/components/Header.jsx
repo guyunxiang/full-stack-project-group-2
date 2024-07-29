@@ -12,7 +12,10 @@ const Header = () => {
   }
 
   return (
-    <header className="mb-3" style={{ boxShadow: "0 0 10px 0 rgba(0,0,0,0.1)" }}>
+    <header
+      className="mb-3"
+      style={{ boxShadow: "0 0 10px 0 rgba(0,0,0,0.1)" }}
+    >
       <Navbar expand="lg">
         <Container>
           <Navbar.Brand href="/" onClick={handleNavigate}>
@@ -24,11 +27,14 @@ const Header = () => {
               <Nav.Link href="/" onClick={handleNavigate}>
                 Home
               </Nav.Link>
-              <Nav.Link href="/retirements" onClick={handleNavigate}>
-                UpComing Retirement
+              <Nav.Link href="/employees" onClick={handleNavigate}>
+                Employees
+              </Nav.Link>
+              <Nav.Link href="/retirees" onClick={handleNavigate}>
+                Retirees
               </Nav.Link>
               <Nav.Link href="/add" onClick={handleNavigate}>
-                New Employee
+                New
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
