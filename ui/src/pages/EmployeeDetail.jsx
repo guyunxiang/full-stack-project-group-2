@@ -25,6 +25,7 @@ const EmployeeDetailPage = () => {
             lastname
             dob
             doj
+            timeToRetirement
             title
             department
             type
@@ -64,7 +65,6 @@ const EmployeeDetailPage = () => {
   }, [id]);
 
   const updateEmployee = async (data) => {
-    console.log(id, data);
     const requestBody = {
       query: `
         mutation updateEmployee(
@@ -122,10 +122,35 @@ const EmployeeDetailPage = () => {
     return;
   }
 
+  // render retirement info
+  const renderRetirementInfo = () => {
+    if (!employeeData.timeToRetirement) {
+      return (
+        <div>
+          You are retired
+          <hr />
+        </div>
+      )
+    }
+    const { years, months, days } = JSON.parse(employeeData.timeToRetirement || "{}");
+    return (
+      <div>
+        Left for the retirement: &nbsp;
+        {days > 0 && `${days} day${days > 1 ? 's' : ''}`}
+        {years > 0 ? ', ' : months ? ' and ' : ''}
+        {months > 0 && `${months} month${months > 1 ? 's' : ''}`}
+        {(days > 0 || months > 0) && years > 0 ? ' and ' : ''}
+        {years > 0 && `${years} year${years > 1 ? 's' : ''}`}
+        <hr />
+      </div>
+    )
+  }
+
   return (
     <div className="container">
       <h2 className="mb-3">Employee Detail</h2>
       <hr />
+      {renderRetirementInfo()}
       <form className="row row-gap-3 form" onSubmit={handleSubmit}>
         <div className="col-12 col-xl-6 row align-items-center">
           <label htmlFor="firstname" className="w-25 form-label">
