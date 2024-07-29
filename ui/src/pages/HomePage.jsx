@@ -5,15 +5,15 @@ const HomePage = () => {
   const students = [
     {
       name: "Gurleen, Kaur",
-      number: "",
+      number: "8915254",
     },
     {
       name: "Sukhmit, Kaur",
-      number: "",
+      number: "8914645",
     },
     {
       name: "Yunxiang, Gu",
-      number: 8904492,
+      number: "8904492",
     },
   ];
 
