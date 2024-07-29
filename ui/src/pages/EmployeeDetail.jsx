@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
 
-import { TITLES, DEPARTMENTS, EMPLOYEETYPES } from "../utils/const";
+import { TITLES, DEPARTMENTS, EMPLOYEETYPES, STATUS } from "../utils/const";
 import { toast } from "react-toastify";
 
 const EmployeeDetailPage = () => {
@@ -96,7 +97,9 @@ const EmployeeDetailPage = () => {
     if (!res.ok) {
       throw new Error("Failed to update employee data");
     }
-    const { data: { updateEmployee } } = await res.json();
+    const {
+      data: { updateEmployee },
+    } = await res.json();
     if (!updateEmployee.success) {
       toast.error(updateEmployee.message);
       return;
@@ -130,107 +133,98 @@ const EmployeeDetailPage = () => {
           You are retired
           <hr />
         </div>
-      )
+      );
     }
-    const { years, months, days } = JSON.parse(employeeData.timeToRetirement || "{}");
+    const { years, months, days } = JSON.parse(
+      employeeData.timeToRetirement || "{}"
+    );
     return (
       <div>
         Left for the retirement: &nbsp;
-        {days > 0 && `${days} day${days > 1 ? 's' : ''}`}
-        {years > 0 ? ', ' : months ? ' and ' : ''}
-        {months > 0 && `${months} month${months > 1 ? 's' : ''}`}
-        {(days > 0 || months > 0) && years > 0 ? ' and ' : ''}
-        {years > 0 && `${years} year${years > 1 ? 's' : ''}`}
+        {days > 0 && `${days} day${days > 1 ? "s" : ""}`}
+        {years > 0 ? ", " : months ? " and " : ""}
+        {months > 0 && `${months} month${months > 1 ? "s" : ""}`}
+        {(days > 0 || months > 0) && years > 0 ? " and " : ""}
+        {years > 0 && `${years} year${years > 1 ? "s" : ""}`}
         <hr />
       </div>
-    )
-  }
+    );
+  };
+
+  console.log(employeeData);
 
   return (
     <div className="container">
       <h2 className="mb-3">Employee Detail</h2>
       <hr />
       {renderRetirementInfo()}
-      <form className="row row-gap-3 form" onSubmit={handleSubmit}>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="firstname" className="w-25 form-label">
-            First Name:
-          </label>
-          <input
+      <Form className="row row-gap-3 form" onSubmit={handleSubmit}>
+        <Form.Group className="col-12 col-xl-6 row align-items-center">
+          <Form.Label className="w-25">First Name:</Form.Label>
+          <Form.Control
             type="text"
             name="firstname"
-            className="w-75 form-control"
+            className="w-75"
             defaultValue={employeeData.firstname}
             disabled
           />
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="lastname" className="w-25 form-label">
-            Last Name:
-          </label>
-          <input
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center">
+          <Form.Label className="w-25">Last Name:</Form.Label>
+          <Form.Control
             type="text"
             name="lastname"
-            className="w-75 form-control"
+            className="w-75"
             defaultValue={employeeData.lastname}
             disabled
           />
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="age" className="w-25">
-            Date of Birth:
-          </label>
-          <input
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center">
+          <Form.Label className="w-25">Date of Birth:</Form.Label>
+          <Form.Control
             type="date"
             name="age"
-            className="w-75 form-control"
+            className="w-75"
             defaultValue={employeeData.dob}
             disabled
           />
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="doj" className="w-25 form-label">
-            Date of Joining:
-          </label>
-          <input
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center">
+          <Form.Label className="w-25">Date of Joining:</Form.Label>
+          <Form.Control
             type="date"
             name="doj"
-            className="w-75 form-control"
+            className="w-75"
             defaultValue={employeeData.doj}
             disabled
           />
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="title" className="w-25 form-label">
-            Title:
-          </label>
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center">
+          <Form.Label className="w-25">Title:</Form.Label>
           <div className="d-flex w-75 gap-3 ps-0">
             {TITLES.map((title, index) => (
-              <label htmlFor={title} key={title} className="form-check-label">
-                <input
-                  type="radio"
-                  name="title"
-                  id={title}
-                  value={title}
-                  checked={title === employeeTitle}
-                  onChange={() => {
-                    setTitle(title);
-                  }}
-                  className="me-1 form-check-input"
-                />
-                {title}
-              </label>
+              <Form.Check
+                key={title}
+                type="radio"
+                name="title"
+                id={title}
+                value={title}
+                label={title}
+                checked={title === employeeTitle}
+                onChange={() => {
+                  setTitle(title);
+                }}
+                className="me-1"
+              />
             ))}
           </div>
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="department" className="w-25 form-label">
-            Department:
-          </label>
-          <select
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center">
+          <Form.Label className="w-25">Department:</Form.Label>
+          <Form.Select
             name="department"
             id="department"
-            className="w-75 form-select"
+            className="w-75"
             value={department}
             onChange={(e) => {
               setDepartment(e.target.value);
@@ -241,44 +235,53 @@ const EmployeeDetailPage = () => {
                 {department}
               </option>
             ))}
-          </select>
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="type" className="w-25 form-label">
-            Employee Type:
-          </label>
+          </Form.Select>
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center">
+          <Form.Label className="w-25">Employee Type:</Form.Label>
           <div className="d-flex w-75 gap-3 ps-0">
-            {EMPLOYEETYPES.map((type, index) => (
-              <label htmlFor={type} key={type}>
-                <input
-                  type="radio"
-                  name="type"
-                  id={type}
-                  value={type}
-                  defaultChecked={employeeData.type}
-                  className="me-1 form-check-input"
-                  disabled
-                />
-                {type}
-              </label>
+            {EMPLOYEETYPES.map((type) => (
+              <Form.Check
+                key={type}
+                type="radio"
+                name="type"
+                id={type}
+                value={type}
+                label={type}
+                defaultChecked={employeeData.type}
+                className="me-1"
+                disabled
+              />
             ))}
           </div>
-        </div>
-        <div className="col-12 col-xl-6 row align-items-center">
-          <label htmlFor="status" className="w-25 form-label">
-            Current Status:
-          </label>
-          <input
-            type="number"
+        </Form.Group>
+        <Form.Group className="col-12 col-xl-6 row align-items-center">
+          <Form.Label className="w-25">Current Status:</Form.Label>
+          <Form.Select
+            type="select"
             name="status"
-            className="w-75 form-control"
-            defaultValue={employeeData.status}
-          />
-        </div>
+            className="w-75"
+            value={employeeData.status}
+            onChange={(e) =>
+              setEmployeeData({
+                ...employeeData,
+                status: +e.target.value,
+              })
+            }
+          >
+            {Object.keys(STATUS).map((key) => (
+              <option key={key} value={key}>
+                {STATUS[key]}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
         <div className="col-12 col-xl-6 row align-items-center">
-          <input type="submit" value="Update" className="btn btn-primary" />
+          <Button type="submit" variant="primary">
+            Update
+          </Button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };
