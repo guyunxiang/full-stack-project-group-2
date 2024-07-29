@@ -1,27 +1,39 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Container, Navbar, Nav } from "react-bootstrap";
 
 const Header = () => {
+
+  const navigate = useNavigate();
+
+  const handleNavigate = (e) => {
+    e.preventDefault();
+    navigate(e.target.getAttribute("href"));
+  }
+
   return (
-    <header className="mb-3 py-3" style={{ backgroundColor: "#f5f5f5" }}>
-      <div className="container d-flex justify-content-between">
-        <div>
-          <Link to="/">Group 2</Link>
-        </div>
-        <nav>
-          <ul className="d-flex gap-3 m-0 p-0" style={{ listStyle: "none" }}>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/retirement">UpComing Retirement</Link>
-            </li>
-            <li>
-              <Link to="/add">Add Employee</Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+    <header className="mb-3" style={{ boxShadow: "0 0 10px 0 rgba(0,0,0,0.1)" }}>
+      <Navbar expand="lg">
+        <Container>
+          <Navbar.Brand href="/" onClick={handleNavigate}>
+            Group 2
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbar-nav" />
+          <Navbar.Collapse id="navbar-nav">
+            <Nav className="ms-auto">
+              <Nav.Link href="/" onClick={handleNavigate}>
+                Home
+              </Nav.Link>
+              <Nav.Link href="/retirement" onClick={handleNavigate}>
+                UpComing Retirement
+              </Nav.Link>
+              <Nav.Link href="/add" onClick={handleNavigate}>
+                Add Employee
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     </header>
   );
 };
