@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Table } from "react-bootstrap";
 
 import EmployeeFilter from "../components/EmployeeFilter";
+import { STATUS } from "../utils/const";
 
 const UpComingRetirement = () => {
   const navigate = useNavigate();
@@ -85,6 +87,9 @@ const UpComingRetirement = () => {
         );
         return <td key={rowData[key]}>{dateString}</td>;
       }
+      if (key === "status") {
+        return <td key={rowData[key]}>{STATUS[rowData[key]]}</td>;
+      }
       return <td key={rowData[key]}>{rowData[key]}</td>;
     });
     return tds;
@@ -112,7 +117,7 @@ const UpComingRetirement = () => {
       <hr />
       <EmployeeFilter handleChange={handleChange} />
       <hr />
-      <table className="table">
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>First Name</th>
@@ -128,7 +133,7 @@ const UpComingRetirement = () => {
           </tr>
         </thead>
         <tbody>{renderTable(employeeData)}</tbody>
-      </table>
+      </Table>
     </div>
   );
 };
