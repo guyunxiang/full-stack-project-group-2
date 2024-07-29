@@ -12,6 +12,7 @@ type Employee {
   dob: String
   title: String
   department: String
+  retirementDate: String
   type: String
   status: Int
 }
