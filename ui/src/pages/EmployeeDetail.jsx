@@ -105,6 +105,7 @@ const EmployeeDetailPage = () => {
       return;
     }
     toast.success("Update successfully!");
+    navigate("/employees");
   };
 
   // on create a new employee
@@ -151,7 +152,7 @@ const EmployeeDetailPage = () => {
     );
   };
 
-  console.log(employeeData);
+  // console.log(employeeData);
 
   return (
     <div className="container">
