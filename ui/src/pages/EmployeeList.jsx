@@ -60,10 +60,10 @@ const EmployeeListPage = () => {
 
   const handleChange = (value) => {
     if (value === "All") {
-      navigate("/");
+      navigate("/employees");
       return;
     }
-    navigate("/?employeeType=" + value, {
+    navigate("/employees?employeeType=" + value, {
       state: { employeeType: value },
     });
   };
