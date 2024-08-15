@@ -16,7 +16,7 @@ const Header = () => {
       className="mb-3"
       style={{ boxShadow: "0 0 10px 0 rgba(0,0,0,0.1)" }}
     >
-      <Navbar expand="lg">
+      <Navbar expand="lg" bg="primary" variant="dark">
         <Container>
           <Navbar.Brand href="/" onClick={handleNavigate}>
             Group 2
@@ -31,7 +31,7 @@ const Header = () => {
                 Employees
               </Nav.Link>
               <Nav.Link href="/retirees" onClick={handleNavigate}>
-                Retirees
+                UpComing Retirement
               </Nav.Link>
               <Nav.Link href="/add" onClick={handleNavigate}>
                 New
