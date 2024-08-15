@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Table } from "react-bootstrap";
 
 import EmployeeFilter from "../components/EmployeeFilter";
@@ -59,10 +59,10 @@ const UpComingRetirement = () => {
 
   const handleChange = (value) => {
     if (value === "All") {
-      navigate("/retirements");
+      navigate("/retirees");
       return;
     }
-    navigate("/retirements?employeeType=" + value);
+    navigate("/retirees?employeeType=" + value);
   };
 
   // render each column data
@@ -92,6 +92,15 @@ const UpComingRetirement = () => {
       }
       return <td key={rowData[key]}>{rowData[key]}</td>;
     });
+    tds.push(<td key={id}>
+      <Link
+        to={`/employee/${id}`}
+        state={{ id }}
+        className="text-primary me-3"
+      >
+        Edit
+      </Link>
+    </td>);
     return tds;
   };
 
@@ -130,6 +139,7 @@ const UpComingRetirement = () => {
             <th>Department</th>
             <th>EmployeeType</th>
             <th>CurrentStatus</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>{renderTable(employeeData)}</tbody>
