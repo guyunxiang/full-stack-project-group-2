@@ -15,6 +15,10 @@ const HomePage = () => {
       name: "Yunxiang, Gu",
       number: "8904492",
     },
+    {
+      name: "David, Akhigbe",
+      number: "",
+    }
   ];
 
   return (
