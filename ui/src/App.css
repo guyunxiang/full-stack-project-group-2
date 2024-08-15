@@ -69,3 +69,7 @@ hr {
 .EmployeeTable table td.actions span:hover {
   text-decoration: underline;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
