@@ -223,7 +223,7 @@ const EmployeeCreatePage = () => {
           />
         </Form.Group>
         <div className="col-12 col-xl-6 row align-items-center">
-          <Button type="submit" className="btn btn-primary">
+          <Button type="submit" variant="primary">
             Add an Employee
           </Button>
         </div>
