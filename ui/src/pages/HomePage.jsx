@@ -17,8 +17,8 @@ const HomePage = () => {
     },
     {
       name: "David, Akhigbe",
-      number: "",
-    }
+      number: "8919368",
+    },
   ];
 
   return (
